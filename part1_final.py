@@ -28,7 +28,7 @@ def cost_function(theta_array, x_value, y_value, m):
 def training(x_train, y_train, alpha, iters):
     # This is the function which takes care of the Regression
 
-    # Finding the size of the
+    # Finding size of the training data
     m = x_train.size
 
     # initializing values of thetas
