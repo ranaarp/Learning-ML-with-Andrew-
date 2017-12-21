@@ -6,9 +6,7 @@ from matplotlib import cm
 from matplotlib.ticker import LinearLocator, FormatStrFormatter
 from matplotlib import style
 from matplotlib import rcParams
-rcParams.update({'font.size': 16})
-
-# style.use('ggplot')
+# rcParams.update({'font.size': 16})    # uncomment this line to increase the text size in plots
 
 
 def hypothesis(theta_array, x):
@@ -43,8 +41,8 @@ def training(x_train, y_train, alpha, iters):
 
     for i in range(iters):
 
-        # plotting our hypothesis across the training data after each iteration until 10 iterations
-        if i < 1:
+        # plotting our hypothesis across the training data after each iteration until iteration 10
+        if i < 11:
             # finding the range of x values across which we would like to plot our hypothesis
             lower_x_coordinate = min(x_train)
             higher_x_coordinate = max(x_train)
@@ -53,10 +51,14 @@ def training(x_train, y_train, alpha, iters):
             x_coordinate_for_line = np.arange(lower_x_coordinate, stop=higher_x_coordinate, step=1)
             y_coordinate_for_line = x_coordinate_for_line * theta_array[1] + theta_array[0]
             # y(x) = m*x +c is the final line
+
+            # initializing a figure for a plot showing the fit and another showing the cost function value
             fig = plt.figure(figsize=(8, 12))
             plt.tight_layout()
             ax1 = fig.add_subplot(2, 1, 1)
             ax2 = fig.add_subplot(2, 1, 2, projection= '3d')
+
+            # plotting our hypothesis over the training data
             ax1.set_title("Plotting our hypothesis over training data")
             plt.suptitle("iteration number : %d" % i).set_size(fontsize= 20)
             ax1.set_xlabel("x values")
@@ -65,47 +67,34 @@ def training(x_train, y_train, alpha, iters):
             ax1.plot(x_coordinate_for_line, y_coordinate_for_line, "-k", label="hypothesis")
             ax1.set_ylim(-9, 115)
             ax1.legend()
-            # plt.show()
 
+            # setting up the range of theta_1 and theta_0 across which the cost function will be plotted
             theta_1_val = np.linspace(-1, 3, num=100)
             theta_0_val = np.linspace(-10, 10, num=100)
 
+            # setting up a grid for the 3D plot of the cost function
             THETA_0_VAL, THETA_1_VAL = np.meshgrid(theta_0_val, theta_1_val)
 
             Z = np.zeros((100, 100))
 
+            # finding values of Z ,i.e, the cost function for each (theta_0, theta_1) in the grid
             for i in range(100):
                 for j in range(100):
                     Z[i, j] = cost_function([THETA_0_VAL[i, j], THETA_1_VAL[i, j]], x_train, y_train, x_train.size)
 
+            # plotting our cost function
             xpoint = theta_array[0]
             ypoint = theta_array[1]
             zpoint = np.zeros((1))
             zpoint = cost_function(theta_array, x_train, y_train, x_train.size)
-            # 3D plot of the cost function at every iteration
-            # ax = fig.add_subplot(1, 2, 2)
-            # ax2 = fig.gca(projection='3d')
-            # surf = ax.plot_surface(THETA_0_VAL, THETA_1_VAL, Z, rstride=1, cstride=1, cmap=cm.coolwarm, linewidth=0,antialiased=False)
-            # ax.set_zlim(-1.01, 1.01)
-            # ax.plot_wireframe(THETA_0_VAL, THETA_1_VAL, Z, rstride=10, cstride=10)
-            # ax.plot_trisurf(THETA_0_VAL, THETA_1_VAL, Z, cmap=cm.jet, linewidth=0.2)
             ax2.plot_surface(THETA_0_VAL, THETA_1_VAL, Z, rstride=8, cstride=8, alpha=0.3)
-            # ax2.set_aspect(10)
-            # cset = ax.contour(THETA_0_VAL, THETA_1_VAL, Z, zdir='z', offset=-100, cmap=cm.coolwarm)
-            # cset = ax.contour(THETA_0_VAL, THETA_1_VAL, Z, zdir='x', offset=-40, cmap=cm.coolwarm)
-            # cset = ax.contour(THETA_0_VAL, THETA_1_VAL, Z, zdir='y', offset=40, cmap=cm.coolwarm)
             ax2.set_xlabel("theta 0 values")
             ax2.set_ylabel("theta 1 values")
             ax2.set_zlabel("Cost Function values")
             ax2.set_title("Cost Function ")
             ax2.tick_params(labelsize= 5)
-            # print(ax2.ayim)
             ax2.view_init(azim = 10)
-            # ax.zaxis.set_major_locator(LinearLocator(10))
-            # ax.zaxis.set_major_formatter(FormatStrFormatter('%.02f'))
             ax2.scatter(xpoint, ypoint, zpoint, color='r', s= 40, label="point representing thetas")
-            # ax2.legend()
-            # fig.colorbar(surf, shrink=0.5, aspect=5)
             plt.show()
 
         # changing the values of theta 0 and theta 1 according to the gradient descent method
@@ -152,8 +141,8 @@ def improvise_thetas(theta_array, X, Y, alpha, m, iteration_number):
 
         summation_1 += X[i]*((theta_array[0] + theta_array[1]*X[i])-Y[i])
 
+    # updating values of both the theta's
     new_theta_0 = theta_array[0] - alpha * (summation_0) / m
-
     new_theta_1 = theta_array[1] - alpha * (summation_1) / m
 
     updated_theta_array = [new_theta_0, new_theta_1]
@@ -161,7 +150,7 @@ def improvise_thetas(theta_array, X, Y, alpha, m, iteration_number):
     return updated_theta_array
 
 
-def testing(x_test, y_test, theta_array) :
+def testing(x_test, y_test, theta_array):
     m = x_test.size
 
     # print('value of m is : ', m)
