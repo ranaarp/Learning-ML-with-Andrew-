@@ -5,9 +5,8 @@ from mpl_toolkits.mplot3d import Axes3D
 from matplotlib import cm
 from matplotlib.ticker import LinearLocator, FormatStrFormatter
 
-
-raw_training_data = pd.read_csv("/home/rana/Desktop/train.csv")
-raw_testing_data = pd.read_csv("/home/rana/Desktop/test.csv")
+raw_training_data = pd.read_csv("Absolute_Path_to_file/train.csv")
+raw_testing_data = pd.read_csv("Absolute_Path_to_file/test.csv")
 print(raw_training_data.size)
 train_data = raw_training_data.dropna()
 test_data = raw_testing_data.dropna()

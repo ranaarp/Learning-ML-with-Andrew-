@@ -39,10 +39,13 @@ def training(x_train, y_train, alpha, iters):
     # creating an array that stores the values of the cost function during each iteration
     cost_function_values = []
 
+    # setting up the iteration number until which you would like to plot the progress of your training
+    k = 3
+
     for i in range(iters):
 
-        # plotting our hypothesis across the training data after each iteration until iteration 10
-        if i < 11:
+        # plotting our hypothesis across the training data after each iteration until iteration 2
+        if i < k:
             # finding the range of x values across which we would like to plot our hypothesis
             lower_x_coordinate = min(x_train)
             higher_x_coordinate = max(x_train)
@@ -56,7 +59,7 @@ def training(x_train, y_train, alpha, iters):
             fig = plt.figure(figsize=(8, 12))
             plt.tight_layout()
             ax1 = fig.add_subplot(2, 1, 1)
-            ax2 = fig.add_subplot(2, 1, 2, projection= '3d')
+            ax2 = fig.add_subplot(2, 1, 2, projection='3d')
 
             # plotting our hypothesis over the training data
             ax1.set_title("Plotting our hypothesis over training data")
@@ -197,8 +200,8 @@ if __name__ == "__main__" :
 
     # Load the data, both for training and testing. I'm using the 'pandas' library to do this here.
     # If you are only given training data, then set aside a part of it for testing.
-    raw_training_data = pd.read_csv("/home/rana/Desktop/train.csv")
-    raw_testing_data = pd.read_csv("/home/rana/Desktop/test.csv")
+    raw_training_data = pd.read_csv("Absolute_Path_to_file/train.csv")
+    raw_testing_data = pd.read_csv("Absolute_Path_to_file/test.csv")
 
     # Cleaning the data by removing the rows with "NaN" values in them. dropna() does the job
     cleaned_training_data = raw_training_data.dropna()

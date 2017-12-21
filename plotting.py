@@ -3,8 +3,8 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 
-raw_training_data = pd.read_csv("/home/rana/Desktop/train.csv")
-raw_testing_data = pd.read_csv("/home/rana/Desktop/test.csv")
+raw_training_data = pd.read_csv("Absolute_Path_to_file/train.csv")
+raw_testing_data = pd.read_csv("Absolute_Path_to_file/test.csv")
 train_data = raw_training_data.dropna()
 test_data = raw_testing_data.dropna()
 
